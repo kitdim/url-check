@@ -9,6 +9,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.validator.constraints.URL;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.time.Instant;
@@ -23,10 +24,13 @@ public class Url {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
+
     @Column(unique = true)
     @NotBlank(message = "url no be empty")
+    @URL(message = "this is not url")
     @ToString.Include
     private String name;
+
     @CreatedDate
     private Instant createdAt;
 }
