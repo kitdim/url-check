@@ -1,5 +1,6 @@
 package kit.org.app.controller;
 
+import jakarta.validation.Valid;
 import kit.org.app.model.Url;
 import kit.org.app.service.UrlService;
 import lombok.RequiredArgsConstructor;
@@ -33,13 +34,13 @@ public class UrlController {
 
     @PostMapping(value = "/urls")
     @ResponseStatus(HttpStatus.CREATED)
-    public Url create(@RequestBody Url data) {
+    public Url create(@Valid @RequestBody Url data) {
         return urlService.save(data);
     }
 
     @PutMapping(value = "/urls/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Url update(@PathVariable Long id, @RequestBody Url data) {
+    public Url update(@PathVariable Long id, @Valid @RequestBody Url data) {
         return urlService.update(id, data);
     }
 
