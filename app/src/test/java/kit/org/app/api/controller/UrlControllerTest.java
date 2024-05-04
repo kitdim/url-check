@@ -76,7 +76,7 @@ public class UrlControllerTest {
     @DisplayName("Test create url")
     public void testCreate() throws Exception {
         Url testUrl = new Url();
-        testUrl.setName("test.com");
+        testUrl.setName("https://test.com");
         MockHttpServletRequestBuilder postRequest = post("/api/urls")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(testUrl));
