@@ -87,7 +87,7 @@ public class UrlControllerTest {
     @DisplayName("Test update by id")
     public void testUpdate() throws Exception {
         HashMap<String, String> data = new HashMap<>();
-        data.put("name", "newtest.com");
+        data.put("name", "https://test2.com");
 
         MockHttpServletRequestBuilder putRequest = put("/api/urls/1")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -96,7 +96,7 @@ public class UrlControllerTest {
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse();
-        assertThat(response.getContentAsString()).contains("newtest.com");
+        assertThat(response.getContentAsString()).contains("https://test2.com");
     }
 
     @Test
