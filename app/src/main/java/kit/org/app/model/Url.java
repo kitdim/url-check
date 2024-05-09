@@ -1,16 +1,13 @@
 package kit.org.app.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.validator.constraints.URL;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.Instant;
 
@@ -20,6 +17,7 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @Table(name = "urls")
 @Getter
 @Setter
+@EntityListeners(AuditingEntityListener.class)
 public class Url {
     @Id
     @GeneratedValue(strategy = IDENTITY)
