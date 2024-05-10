@@ -1,5 +1,6 @@
 package kit.org.app.service;
 
+import kit.org.app.dto.url.CreateUrl;
 import kit.org.app.model.Url;
 import kit.org.app.repository.UrlRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,8 +21,10 @@ public class UrlService {
         return repository.findById(id).orElseThrow(RuntimeException::new);
     }
 
-    public Url save(Url data) {
-        return repository.save(data);
+    public Url save(CreateUrl data) {
+        Url url = new Url();
+        url.setName(data.getUrl());
+        return repository.save(url);
     }
 
     public Url update(Long id, Url data) {
