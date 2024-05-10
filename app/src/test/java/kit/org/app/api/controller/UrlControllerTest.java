@@ -2,6 +2,7 @@ package kit.org.app.api.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
+import kit.org.app.dto.url.CreateUrl;
 import kit.org.app.model.Url;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -75,8 +76,8 @@ public class UrlControllerTest {
     @Test
     @DisplayName("Test create url")
     public void testCreate() throws Exception {
-        Url testUrl = new Url();
-        testUrl.setName("https://test.com");
+        CreateUrl testUrl = new CreateUrl();
+        testUrl.setUrl("https://test.com");
         MockHttpServletRequestBuilder postRequest = post("/api/urls")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(testUrl));
