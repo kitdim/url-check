@@ -1,10 +1,13 @@
 package kit.org.app.controller;
 
 import jakarta.validation.Valid;
+import jdk.jfr.ContentType;
+import kit.org.app.dto.url.CreateUrl;
 import kit.org.app.model.Url;
 import kit.org.app.service.UrlService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,7 +37,7 @@ public class UrlController {
 
     @PostMapping(value = "/urls")
     @ResponseStatus(HttpStatus.CREATED)
-    public Url create(@Valid @RequestBody Url data) {
+    public Url create(@Valid CreateUrl data) {
         return urlService.save(data);
     }
 
