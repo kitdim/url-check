@@ -30,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @Testcontainers
 @Transactional
-public class UrlControllerTest {
+public class UrlControllerApiTest {
     @Autowired
     private MockMvc mockMvc;
     @Autowired
