@@ -29,6 +29,9 @@ public class Url {
     @ToString.Include
     private String name;
 
+    private String status;
+
     @CreatedDate
     private Instant createdAt;
+
 }
