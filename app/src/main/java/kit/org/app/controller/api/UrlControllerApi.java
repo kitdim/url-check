@@ -1,7 +1,8 @@
-package kit.org.app.controller.rest;
+package kit.org.app.controller.api;
 
 import jakarta.validation.Valid;
 import kit.org.app.dto.url.CreateUrl;
+import kit.org.app.dto.url.ShowUrl;
 import kit.org.app.model.Url;
 import kit.org.app.service.UrlService;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +30,7 @@ public class UrlControllerApi {
 
     @GetMapping(value = "/urls/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Url show(@PathVariable Long id) {
+    public ShowUrl show(@PathVariable Long id) {
         return urlService.getUrlById(id);
     }
 
