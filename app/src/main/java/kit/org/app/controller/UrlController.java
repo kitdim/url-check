@@ -1,55 +1,53 @@
 package kit.org.app.controller;
 
 import jakarta.validation.Valid;
-import jdk.jfr.ContentType;
 import kit.org.app.dto.url.CreateUrl;
+import kit.org.app.dto.url.ShowUrl;
 import kit.org.app.model.Url;
 import kit.org.app.service.UrlService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
-@RestController
-@RequestMapping(value = "/api")
+@Controller
 @RequiredArgsConstructor
 public class UrlController {
     private final UrlService urlService;
 
-    @GetMapping(value = "/urls")
-    @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<List<Url>> index() {
+    @GetMapping(path = "/urls")
+    public String index(Model page) {
         List<Url> urls = urlService.getAll();
-        return ResponseEntity
-                .ok()
-                .header("X-Total-Count", String.valueOf(urls.size()))
-                .body(urls);
+        page.addAttribute("urls", urls);
+
+        return "urls.html";
     }
 
-    @GetMapping(value = "/urls/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public Url show(@PathVariable Long id) {
-        return urlService.getUrlById(id);
+    @GetMapping(path = "/urls/{id}")
+    public String show(@PathVariable Long id, Model page) {
+        ShowUrl showUrl = urlService.getUrlById(id);
+        page.addAttribute("url", showUrl);
+
+        return "show.html";
     }
 
-    @PostMapping(value = "/urls")
-    @ResponseStatus(HttpStatus.CREATED)
-    public Url create(@Valid CreateUrl data) {
-        return urlService.save(data);
-    }
-
-    @PutMapping(value = "/urls/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public Url update(@PathVariable Long id, @Valid @RequestBody Url data) {
-        return urlService.update(id, data);
-    }
-
-    @DeleteMapping(value = "/urls/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable Long id) {
-        urlService.delete(id);
+    @PostMapping(path = "/urls")
+    public String create(@Valid CreateUrl createDto, BindingResult bindingResult, Model page) {
+        if (bindingResult.hasErrors()){
+            String error = bindingResult.getFieldError().getDefaultMessage();
+            page.addAttribute("error", error);
+            return "redirect:/";
+        }
+        try {
+            urlService.save(createDto);
+        } catch (Exception exception) {
+            return "redirect:/";
+        }
+        return "redirect:/urls";
     }
 }
