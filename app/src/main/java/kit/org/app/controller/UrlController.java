@@ -4,8 +4,10 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import kit.org.app.dto.url.CreateUrl;
 import kit.org.app.dto.url.FlashOnPage;
+import kit.org.app.dto.url.ShowCheck;
 import kit.org.app.dto.url.ShowUrl;
 import kit.org.app.model.Url;
+import kit.org.app.service.UrlCheckService;
 import kit.org.app.service.UrlService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -21,11 +23,13 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UrlController {
     private final UrlService urlService;
+    private final UrlCheckService urlCheckService;
 
     @GetMapping(path = "/urls")
     public String index(Model page, HttpSession session) {
         List<Url> urls = urlService.getAll();
         Object messageOnPage = session.getAttribute("flash");
+
         page.addAttribute("urls", urls);
         page.addAttribute("flash", messageOnPage);
         session.invalidate();
@@ -34,11 +38,35 @@ public class UrlController {
     }
 
     @GetMapping(path = "/urls/{id}")
-    public String show(@PathVariable Long id, Model page) {
+    public String show(@PathVariable Long id, Model page, HttpSession session) {
         ShowUrl showUrl = urlService.getUrlById(id);
+        List<ShowCheck> showChecks = urlCheckService.getAllByUrlId(id);
+        Object messageOnPage = session.getAttribute("flash");
+
         page.addAttribute("url", showUrl);
+        page.addAttribute("checks", showChecks);
+        page.addAttribute("flash", messageOnPage);
+        session.invalidate();
 
         return "show.html";
+    }
+
+    @PostMapping(path = "/urls/{id}")
+    public String check(@PathVariable Long id, HttpSession session) {
+        FlashOnPage messageOnPage = new FlashOnPage();
+        String type = "success";
+        String text = "Провека успешно проведена.";
+        try {
+            urlCheckService.save(id);
+        } catch (Exception e) {
+            type = "danger";
+            text = e.getLocalizedMessage();
+        }
+        messageOnPage.setTypeMessage(type);
+        messageOnPage.setTextOfMessage(text);
+        session.setAttribute("flash", messageOnPage);
+
+        return "redirect:/urls/" + id;
     }
 
     @PostMapping(path = "/urls")
@@ -70,7 +98,6 @@ public class UrlController {
         messageOnPage.setTypeMessage(type);
         messageOnPage.setTextOfMessage(text);
         session.setAttribute("flash", messageOnPage);
-
 
         return "redirect:/urls";
     }
