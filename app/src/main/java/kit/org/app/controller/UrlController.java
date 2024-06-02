@@ -54,12 +54,12 @@ public class UrlController {
     @PostMapping(path = "/urls/{id}")
     public String check(@PathVariable Long id, HttpSession session) {
         FlashOnPage messageOnPage = new FlashOnPage();
-        String type = "success";
+        String type = "rounded-0 m-0 alert alert-dismissible fade show alert-success";
         String text = "Провека успешно проведена.";
         try {
             urlCheckService.save(id);
         } catch (Exception e) {
-            type = "danger";
+            type = "rounded-0 m-0 alert alert-dismissible fade show alert-danger";
             text = e.getLocalizedMessage();
         }
         messageOnPage.setTypeMessage(type);
@@ -74,7 +74,7 @@ public class UrlController {
                          Model page, HttpSession session) {
         FlashOnPage messageOnPage = new FlashOnPage();
         if (bindingResult.hasErrors() || createDto.getUrl().isEmpty()){
-            String type = "danger";
+            String type = "rounded-0 m-0 alert alert-dismissible fade show alert-danger";
             String text = bindingResult.getFieldError().getDefaultMessage();
             messageOnPage.setTypeMessage(type);
             messageOnPage.setTextOfMessage(text);
@@ -85,7 +85,7 @@ public class UrlController {
         try {
             urlService.save(createDto);
         } catch (Exception exception) {
-            String type = "primary";
+            String type = "rounded-0 m-0 alert alert-dismissible fade show alert-primary";
             String text = "Уже было добавлено.";
             messageOnPage.setTypeMessage(type);
             messageOnPage.setTextOfMessage(text);
@@ -93,7 +93,7 @@ public class UrlController {
 
             return "index.html";
         }
-        String type = "success";
+        String type = "rounded-0 m-0 alert alert-dismissible fade show alert-success";
         String text = "Успешно добавлено.";
         messageOnPage.setTypeMessage(type);
         messageOnPage.setTextOfMessage(text);
