@@ -27,7 +27,7 @@
 </nav>
 <main class="flex-grow-1">
     <div th:if="${flash != null}">
-        <div class="rounded-0 m-0 alert alert-dismissible fade show alert-danger" role="alert">
+        <div th:class="${flash.typeMessage}" role="alert">
             <p class="m-0" th:text="${flash.textOfMessage}"></p>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
