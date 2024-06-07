@@ -6,6 +6,7 @@ import kit.org.app.model.UrlCheck;
 import kit.org.app.repository.UrlCheckRepository;
 import kit.org.app.repository.UrlRepository;
 import kit.org.app.utils.StatusCodeUtil;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -17,6 +18,7 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,7 +40,7 @@ public class UrlCheckService {
             String title = check.getTitle();
             String h1 = check.getH1();
             String description = check.getDescription();
-            Instant createdAt = check.getCreatedAt();
+            Date createdAt = check.getCreatedAt();
 
             ShowCheck showCheckDto = new ShowCheck();
             showCheckDto.setId(id);
