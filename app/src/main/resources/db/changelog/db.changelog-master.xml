@@ -7,4 +7,6 @@
              relativeToChangelogFile="true" />
     <include file="changesets/07-06-2024-change-time-format.xml"
              relativeToChangelogFile="true" />
+    <include file="changesets/08-06-2024-change-description-type-to-text.xml"
+             relativeToChangelogFile="true" />
 </databaseChangeLog>
