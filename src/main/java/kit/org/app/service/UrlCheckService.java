@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import kong.unirest.*;
 
@@ -32,7 +33,7 @@ public class UrlCheckService {
             String title = check.getTitle();
             String h1 = check.getH1();
             String description = check.getDescription();
-            Instant createdAt = check.getCreatedAt();
+            Date createdAt = check.getCreatedAt();
 
             ShowCheck showCheckDto = new ShowCheck();
             showCheckDto.setId(id);
