@@ -1,4 +1,4 @@
-package kit.org.app.dto.url;
+package kit.org.app.dto;
 
 import lombok.Getter;
 import lombok.Setter;
