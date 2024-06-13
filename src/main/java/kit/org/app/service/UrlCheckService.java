@@ -70,7 +70,8 @@ public class UrlCheckService {
         urlCheck.setDescription(description);
         urlCheck.setUrl(url);
 
-        urlRepository.save(url);
         urlCheckRepository.save(urlCheck);
+        url.setLastCheck(urlCheck.getCreatedAt());
+        urlRepository.save(url);
     }
 }

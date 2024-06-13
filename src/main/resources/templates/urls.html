@@ -50,7 +50,7 @@
                 <td>
                     <a th:href="@{/urls/{id}(id=${url.id})}" th:text="${url.name}"></a>
                 </td>
-                <td th:text="${url.createdAt}" />
+                <td th:text="${url.lastCheck}" />
                 <td th:text="${url.status}" />
             </tr>
             </tbody>

@@ -9,4 +9,6 @@
              relativeToChangelogFile="true" />
     <include file="changesets/08-06-2024-change-description-type-to-text.xml"
              relativeToChangelogFile="true" />
+    <include file="changesets/13-06-2024-add-column-last-update-date-check.xml"
+             relativeToChangelogFile="true" />
 </databaseChangeLog>
