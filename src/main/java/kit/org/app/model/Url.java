@@ -8,6 +8,7 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.validator.constraints.URL;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.Instant;
@@ -39,6 +40,10 @@ public class Url {
     @Column(name = "created_date")
     @Temporal(TIMESTAMP)
     private Date createdAt;
+
+    @Column(name = "last_check_date")
+    @Temporal(TIMESTAMP)
+    private Date lastCheck;
 
     @OneToMany(mappedBy = "url", cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     private List<UrlCheck> urlChecks;

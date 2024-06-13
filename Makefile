@@ -23,7 +23,6 @@ run-dev-docker-db: docker-infra-start run-dev
 start: run-dev-docker-db
 
 docker-infra-start:
-	npx kill-port 5432
 	docker compose -f docker/docker-compose.yml up -d -V --remove-orphans
 
 update-versions:
