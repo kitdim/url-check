@@ -63,11 +63,15 @@ public class UrlController {
         FlashOnPage messageOnPage = new FlashOnPage();
         String type = "rounded-0 m-0 alert alert-dismissible fade show alert-success";
         String text = "Провека успешно проведена.";
-        urlCheckService.save(id);
+        try {
+            urlCheckService.save(id);
+        } catch (Exception e) {
+            type = "rounded-0 m-0 alert alert-dismissible fade show alert-danger";
+            text = e.getLocalizedMessage();
+        }
         messageOnPage.setTypeMessage(type);
         messageOnPage.setTextOfMessage(text);
         session.setAttribute("flash", messageOnPage);
-
         return "redirect:/urls/" + id;
     }
 

@@ -5,6 +5,7 @@ import kit.org.app.model.Url;
 import kit.org.app.model.UrlCheck;
 import kit.org.app.repository.UrlCheckRepository;
 import kit.org.app.repository.UrlRepository;
+import kit.org.app.utils.StatusCodeUtil;
 import lombok.RequiredArgsConstructor;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -50,28 +51,44 @@ public class UrlCheckService {
 
     public void save(Long id) {
         Url url = urlRepository.findById(id).orElseThrow(RuntimeException::new);
-        HttpResponse<String> response = Unirest.get(url.getName()).asString();
-        Document doc = Jsoup.parse(response.getBody());
-
-        String statusCode = String.valueOf(response.getStatus());
-        String title = doc.title();
-        url.setStatus(statusCode);
-
-        Element h1Temp = doc.selectFirst("h1");
-        String h1 = h1Temp == null ? "" : h1Temp.text();
-
-        Element descriptionTemp = doc.selectFirst ("meta[name=description]");
-        String description = descriptionTemp == null ? "" : descriptionTemp.attr("content");
-
         UrlCheck urlCheck = new UrlCheck();
-        urlCheck.setStatusCode(statusCode);
-        urlCheck.setTitle(title);
-        urlCheck.setH1(h1);
-        urlCheck.setDescription(description);
-        urlCheck.setUrl(url);
+        HttpResponse<String> response;
+        Document doc;
+        String statusCode;
+        String title;
 
-        urlCheckRepository.save(urlCheck);
-        url.setLastCheck(urlCheck.getCreatedAt());
-        urlRepository.save(url);
+        try {
+            response = Unirest.get(url.getName()).asString();
+            doc = Jsoup.parse(response.getBody());
+
+            statusCode = String.valueOf(response.getStatus());
+            title = doc.title();
+            url.setStatus(statusCode);
+
+            Element h1Temp = doc.selectFirst("h1");
+            String h1 = h1Temp == null ? "" : h1Temp.text();
+
+            Element descriptionTemp = doc.selectFirst("meta[name=description]");
+            String description = descriptionTemp == null ? "" : descriptionTemp.attr("content");
+
+            urlCheck.setStatusCode(statusCode);
+            urlCheck.setTitle(title);
+            urlCheck.setH1(h1);
+            urlCheck.setDescription(description);
+            urlCheck.setUrl(url);
+        }
+        catch (Exception e) {
+            statusCode = StatusCodeUtil.getStatusCodeByErrorMessage(e);
+            title = e.getLocalizedMessage();
+
+            url.setStatus(statusCode);
+            urlCheck.setStatusCode(statusCode);
+            urlCheck.setTitle(title);
+            urlCheck.setUrl(url);
+        } finally {
+            urlCheckRepository.save(urlCheck);
+            url.setLastCheck(urlCheck.getCreatedAt());
+            urlRepository.save(url);
+        }
     }
 }
