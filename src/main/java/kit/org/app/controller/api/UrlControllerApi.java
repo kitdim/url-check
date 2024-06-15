@@ -1,8 +1,7 @@
 package kit.org.app.controller.api;
 
 import jakarta.validation.Valid;
-import kit.org.app.dto.url.CreateUrl;
-import kit.org.app.dto.url.ShowUrl;
+import kit.org.app.dto.url.*;
 import kit.org.app.model.Url;
 import kit.org.app.service.UrlService;
 import kit.org.app.dto.url.CreateUrl;
@@ -24,8 +23,8 @@ public class UrlControllerApi {
 
     @GetMapping(value = "/urls")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<List<Url>> index() {
-        List<Url> urls = urlService.getAll();
+    public ResponseEntity<List<ShowIndexUrl>> index() {
+        List<ShowIndexUrl> urls = urlService.getAll();
         return ResponseEntity
                 .ok()
                 .header("X-Total-Count", String.valueOf(urls.size()))
