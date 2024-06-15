@@ -1,17 +1,11 @@
-package kit.org.app.controller;
+package kit.org.app.controller.web;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import kit.org.app.dto.url.CreateUrl;
 import kit.org.app.dto.FlashOnPage;
 import kit.org.app.dto.url.ShowCheck;
-import kit.org.app.dto.url.ShowUrl;
-import kit.org.app.model.Url;
-import kit.org.app.service.UrlCheckService;
-import kit.org.app.service.UrlService;
-import kit.org.app.dto.url.CreateUrl;
-import kit.org.app.dto.FlashOnPage;
-import kit.org.app.dto.url.ShowCheck;
+import kit.org.app.dto.url.ShowIndexUrl;
 import kit.org.app.dto.url.ShowUrl;
 import kit.org.app.model.Url;
 import kit.org.app.service.UrlCheckService;
@@ -34,7 +28,7 @@ public class UrlController {
 
     @GetMapping(path = "/urls")
     public String index(Model page, HttpSession session) {
-        List<Url> urls = urlService.getAll();
+        List<ShowIndexUrl> urls = urlService.getAll();
         Object messageOnPage = session.getAttribute("flash");
 
         page.addAttribute("urls", urls);
