@@ -15,6 +15,5 @@ public class ShowCheck {
     private String title;
     private String h1;
     private String description;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd@HH:mm:ss")
     private Date createdAt;
 }
