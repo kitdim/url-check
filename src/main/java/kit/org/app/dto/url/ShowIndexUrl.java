@@ -11,7 +11,6 @@ import java.util.Date;
 public class ShowIndexUrl {
     private Long id;
     private String name;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd@HH:mm:ss")
     private Date lastCheck;
     private String status;
 }
